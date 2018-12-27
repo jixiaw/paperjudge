@@ -21,14 +21,6 @@ class Ui_MainWindow(object):
         font.setPointSize(12)
         self.select.setFont(font)
         self.select.setObjectName("select")
-        self.photo1 = QtWidgets.QLabel(self.centralwidget)
-        self.photo1.setGeometry(QtCore.QRect(10, 260, 380, 310))
-        self.photo1.setText("")
-        self.photo1.setObjectName("photo1")
-        self.photo2 = QtWidgets.QLabel(self.centralwidget)
-        self.photo2.setGeometry(QtCore.QRect(400, 260, 380, 310))
-        self.photo2.setText("")
-        self.photo2.setObjectName("photo2")
         self.result = QtWidgets.QLabel(self.centralwidget)
         self.result.setGeometry(QtCore.QRect(30, 150, 391, 91))
         font = QtGui.QFont()
@@ -122,7 +114,13 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menufile.menuAction())
         self.menubar.addAction(self.menu_2.menuAction())
 
+        self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
+        self.tableWidget.setGeometry(QtCore.QRect(300, 200, 250, 400))
+        self.tableWidget.setObjectName("tableWidget")
+        self.tableWidget.setColumnCount(0)
+        self.tableWidget.setRowCount(0)
         self.retranslateUi(MainWindow)
+
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

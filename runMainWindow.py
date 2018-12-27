@@ -6,13 +6,16 @@ from PyQt5.QtCore import *
 from mainWindow import *
 from paperjudge import judge
 from Datebase.datebase import DBHelper
+import runPhoto1
+import runPhoto2
+from runPhoto1 import viewPhoto1
+from runPhoto2 import viewPhoto2
 
 class MyWindow(Ui_MainWindow,QMainWindow):
     def __init__(self,parent=None):
         super(MyWindow,self).__init__(parent)
         self.setupUi(self)
-        self.photo1.setStyleSheet("border: 1px solid  #000000")
-        self.photo2.setStyleSheet("border: 1px solid  #000000")
+       
         palette1 = QPalette()
         # palette1.setColor(self.backgroundRole(), QColor(192,253,123))   # 设置背景颜色
         palette1.setBrush(self.backgroundRole(), QBrush(QPixmap('1.jpg'))) # 设置背景图片
@@ -71,21 +74,32 @@ class MyWindow(Ui_MainWindow,QMainWindow):
         print(grade)
         line = "该同学的成绩为:"+str(grade)
         self.result.setText(line)
-        jpg = QtGui.QPixmap(fpath).scaled(self.photo1.width(), self.photo1.height())
-        self.photo1.setPixmap(jpg)
-        jpg1 = QtGui.QPixmap(bpath).scaled(self.photo2.width(), self.photo2.height())
-        self.photo2.setPixmap(jpg1)
+        runPhoto1.p1.viewP(fpath)
+        runPhoto2.p2.viewP(bpath)
+        runPhoto1.p1.show()
+        runPhoto2.p2.show()
+        
         print(self.inputID.text())
 
-    def select_all(self):#查询全部学生
-        mydb=DBHelper()
+    def select_all(self): # 查询全部学生
+        mydb = DBHelper()
 
-        result=mydb.search_all()
+        result = mydb.search_all()
+        self.tableWidget.setRowCount(62)
+        self.tableWidget.setColumnCount(2)
+        self.tableWidget.setHorizontalHeaderLabels(['学号', '成绩'])
+        newItem1 = QTableWidgetItem("130122")
+        self.tableWidget.setItem(0,0,newItem1)
+        newItem1 = QTableWidgetItem("130")
+        self.tableWidget.setItem(0, 1, newItem1)
+        i = 0
         for row in result:
-            self.photo1.setText(row[0]+str(row[1]))
-        #self.photo1.setText(result)
-        print(result)
-
+            newItem1 = QTableWidgetItem(row[0])
+            self.tableWidget.setItem(i , 0 , newItem1)
+            newItem2 = QTableWidgetItem(str(row[1]))
+            self.tableWidget.setItem(i , 1 , newItem2)
+            i=i+1
+            
 '''
         self.select_paper.clicked.connect(self.openimage)
         self.select_paper_2.clicked.connect(self.openimage2)
@@ -120,10 +134,13 @@ class MyWindow(Ui_MainWindow,QMainWindow):
         msg_box = QtWidgets.QMessageBox.information(self, '提示', '批改完成')
 '''
 
+
 if __name__ == '__main__':
     import  sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = MyWindow()
-
+    runPhoto1.p1=viewPhoto1()
+        
+    runPhoto2.p2=viewPhoto2()
     MainWindow.show()
     sys.exit(app.exec_())

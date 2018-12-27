@@ -5,6 +5,11 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QLineEdit,QDialog
 from login import Ui_Dialog
 from runMainWindow import MyWindow
+import runPhoto1
+import runPhoto2
+from runPhoto1 import viewPhoto1
+from runPhoto2 import viewPhoto2
+
 
 class myLogin(Ui_Dialog,QDialog):
     def __init__(self):
@@ -34,12 +39,15 @@ def check_login():
         return True
     else:
         return False
-
 def main():
     app = QtWidgets.QApplication(sys.argv)
     if check_login():
         #MainWindow = QtWidgets.QMainWindow()
         ui = MyWindow()
+        
+        runPhoto1.p1=viewPhoto1()
+        
+        runPhoto2.p2=viewPhoto2()
         ui.show()
         sys.exit(app.exec_())
 

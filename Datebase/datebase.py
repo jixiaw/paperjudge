@@ -77,7 +77,6 @@ class DBHelper:
         self.function(sql)
         # cur 操作游标
         result = self.cur.fetchall()
-        print(result)
         # 遍历结果
         # print("学号", "总分", "试卷正面", "试卷背面")
         # id,total,blank,question1,question2,question3,question4,question5,question6,frontpath,backpath
@@ -112,5 +111,3 @@ class DBHelper:
 
 
 
-myDBHelper=DBHelper()
-myDBHelper.search_all()
